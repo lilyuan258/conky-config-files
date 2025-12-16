@@ -1,0 +1,62 @@
+conky.config = {
+    -- 1. 布局设置
+    alignment = 'middle_right',
+    gap_x = 40,
+    gap_y = 0,
+    minimum_height = 600,
+    minimum_width = 300,
+    maximum_width = 300,
+
+    -- 2. 窗口设置
+    background = false,
+    own_window = true,
+    own_window_class = 'Conky',
+    own_window_type = 'desktop',
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    own_window_transparent = true,
+    own_window_argb_visual = true,
+    double_buffer = true,
+
+    -- 3. 字体设置 (使用 NFM 等宽别名，最适合排版)
+    font = 'CaskaydiaMono Nerd Font Mono:size=10', 
+    default_color = 'white',
+    color1 = 'ff9900',
+    color2 = 'aaaaaa',
+    
+    -- 4. 刷新设置
+    update_interval = 1,
+}
+
+conky.text = [[
+${alignc}${font CaskaydiaMono Nerd Font Mono:size=50}${color1}${time %H:%M}${font}
+${alignc}${voffset -10}${font CaskaydiaMono Nerd Font Mono:size=12}${color2}${time %Y年%m月%d日 %A}${font}
+
+${voffset 20}${color1}SYSTEM ${hr 2}
+${color2}Hostname:${alignr}${nodename}
+Kernel:${alignr}${kernel}
+Uptime:${alignr}${uptime}
+
+${voffset 10}${color1}CPU ${hr 2}
+${color2}AMD Ryzen 7 6800H${alignr}${cpu cpu0}%
+${color1}${cpubar 6, 300}
+${cpugraph 40,300 555555 ff9900 -t}
+
+${voffset 10}${color1}MEMORY ${hr 2}
+${color2}RAM Usage:${alignr}${mem} / ${memmax}
+${color1}${membar 6, 300}
+${color2}Swap:${alignr}${swap} / ${swapmax}
+
+${voffset 10}${color1}NVIDIA RTX 3060 ${hr 2}
+${color2}GPU Temp:${alignr}${exec nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader}°C
+VRAM:${alignr}${exec nvidia-smi --query-gpu=memory.used --format=csv,noheader}
+${color1}${execbar nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader}
+
+${voffset 10}${color1}STORAGE ${hr 2}
+${color2}Root (/):${alignr}${fs_used /} / ${fs_size /}
+${color1}${fs_bar 6, 300 /}
+
+${voffset 10}${color1}NETWORK ${hr 2}
+${color2}Download:${alignr}${downspeed wlp4s0}
+${color1}${downspeedgraph wlp4s0 30,300 555555 ff9900 -t}
+${color2}Upload:${alignr}${upspeed wlp4s0}
+]]
